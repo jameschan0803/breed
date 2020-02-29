@@ -1,0 +1,1488 @@
+{
+	"info": {
+		"_postman_id": "b8e76804-33ce-4e8a-900c-9d197e0d2822",
+		"name": "IntegrationTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "list all breeds & subbreeds",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "78e79e5e-c3e6-4334-bc33-ae0993fa3f15",
+						"exec": [
+							"schema = {",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"Validating is List of breeds response schema correct\",",
+							"  \"required\": [",
+							"    \"success\",",
+							"    \"message\",",
+							"    \"data\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"$id\": \"#/properties/success\",",
+							"      \"type\": \"boolean\",",
+							"      \"title\": \"The Success Schema\",",
+							"      \"default\": false,",
+							"      \"examples\": [",
+							"        true",
+							"      ]",
+							"    },",
+							"    \"message\": {",
+							"      \"$id\": \"#/properties/message\",",
+							"      \"type\": \"string\",",
+							"      \"title\": \"The Message Schema\",",
+							"      \"default\": \"\",",
+							"      \"examples\": [",
+							"        \"\"",
+							"      ],",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"data\": {",
+							"      \"$id\": \"#/properties/data\",",
+							"      \"type\": \"array\",",
+							"      \"title\": \"The Data Schema\",",
+							"      \"items\": {",
+							"        \"$id\": \"#/properties/data/items\",",
+							"        \"type\": \"object\",",
+							"        \"title\": \"The Items Schema\",",
+							"        \"required\": [",
+							"          \"breed\"",
+							"        ],",
+							"        \"properties\": {",
+							"          \"breed\": {",
+							"            \"$id\": \"#/properties/data/items/properties/breed\",",
+							"            \"type\": \"string\",",
+							"            \"title\": \"The Breed Schema\",",
+							"            \"default\": \"\",",
+							"            \"examples\": [",
+							"              \"affenpinscher\"",
+							"            ],",
+							"            \"pattern\": \"^(.*)$\"",
+							"          }",
+							"        }",
+							"      }",
+							"    }",
+							"  }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e893441-ed7c-4fae-a8e6-292ae3410b54",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validating is List of all breeds response schema correct\", function() {",
+							"    var response = pm.response.json();",
+							"    var result=tv4.validateResult(response, schema)",
+							"pm.expect(result.valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validating success to be true\", function() {",
+							"    var response = pm.response.json();",
+							"    pm.expect(response.success).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:43000/dog-api",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "43000",
+					"path": [
+						"dog-api"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get breed images",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "df2e6de6-b699-4a15-88ab-bd61ca7d662f",
+						"exec": [
+							"schema = {",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"Validating is List of breeds image response schema correct\",",
+							"  \"required\": [",
+							"    \"success\",",
+							"    \"message\",",
+							"    \"page\",",
+							"    \"perpage\",",
+							"    \"total\",",
+							"    \"data\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"$id\": \"#/properties/success\",",
+							"      \"type\": \"boolean\",",
+							"      \"title\": \"The Success Schema\",",
+							"      \"default\": false,",
+							"      \"examples\": [",
+							"        true",
+							"      ]",
+							"    },",
+							"    \"message\": {",
+							"      \"$id\": \"#/properties/message\",",
+							"      \"type\": \"string\",",
+							"      \"title\": \"The Message Schema\",",
+							"      \"default\": \"\",",
+							"      \"examples\": [",
+							"        \"\"",
+							"      ],",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"page\": {",
+							"      \"$id\": \"#/properties/page\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Page Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        10",
+							"      ]",
+							"    },",
+							"    \"perpage\": {",
+							"      \"$id\": \"#/properties/perpage\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Perpage Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        99",
+							"      ]",
+							"    },",
+							"    \"total\": {",
+							"      \"$id\": \"#/properties/total\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Total Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        1000",
+							"      ]",
+							"    },",
+							"    \"data\": {",
+							"      \"$id\": \"#/properties/data\",",
+							"      \"type\": \"array\",",
+							"      \"title\": \"The Data Schema\",",
+							"      \"items\": {",
+							"        \"$id\": \"#/properties/data/items\",",
+							"        \"type\": \"string\",",
+							"        \"title\": \"The Items Schema\",",
+							"        \"default\": \"\",",
+							"        \"examples\": [",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1824.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_183.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1863.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1882.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1912.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1918.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1921.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1931.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1965.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1987.jpg\"",
+							"        ],",
+							"        \"pattern\": \"^(.*)$\"",
+							"      }",
+							"    }",
+							"  }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "095a2e13-0842-4d6e-b18a-07f9b0a49dc8",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validating is List of breeds image response schema correct\", function() {",
+							"    var response = pm.response.json();",
+							"    var result=tv4.validateResult(response, schema)",
+							"pm.expect(result.valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validating success to be true\", function() {",
+							"    var response = pm.response.json();",
+							"    pm.expect(response.success).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:43000/dog-api/hound?page=10&perpage=99",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "43000",
+					"path": [
+						"dog-api",
+						"hound"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "10"
+						},
+						{
+							"key": "perpage",
+							"value": "99"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get breed images - perpage error",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "738da40e-7d36-4f21-9e60-84431e361c32",
+						"exec": [
+							"schema = {",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"Validating perpage error in getting breed image\",",
+							"  \"required\": [",
+							"    \"success\",",
+							"    \"message\",",
+							"    \"page\",",
+							"    \"perpage\",",
+							"    \"total\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"$id\": \"#/properties/success\",",
+							"      \"type\": \"boolean\",",
+							"      \"title\": \"The Success Schema\",",
+							"      \"default\": false,",
+							"      \"examples\": [",
+							"        false",
+							"      ]",
+							"    },",
+							"    \"message\": {",
+							"      \"$id\": \"#/properties/message\",",
+							"      \"type\": \"string\",",
+							"      \"title\": \"The Message Schema\",",
+							"      \"default\": \"\",",
+							"      \"examples\": [",
+							"        \" perpage is over 200 limitation or less than 0\"",
+							"      ],",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"page\": {",
+							"      \"$id\": \"#/properties/page\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Page Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"perpage\": {",
+							"      \"$id\": \"#/properties/perpage\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Perpage Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"total\": {",
+							"      \"$id\": \"#/properties/total\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Total Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    }",
+							"  }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "afee2ebe-375c-49b2-ab7a-6e522da13824",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validating perpage error in getting breed image\", function() {",
+							"    var response = pm.response.json();",
+							"    var result =tv4.validateResult(response, schema)",
+							"    pm.expect(result.valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validating success to be false\", function() {",
+							"    var response = pm.response.json();",
+							"    pm.expect(response.success).to.be.false;",
+							"});",
+							"",
+							"pm.test(\"Validating message should have error message\", function() {",
+							"    var response = pm.response.json();",
+							"    var tag = response.message.length > 0 ? true : false;",
+							"    pm.expect(tag).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:43000/dog-api/hound?page=10&perpage=990",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "43000",
+					"path": [
+						"dog-api",
+						"hound"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "10"
+						},
+						{
+							"key": "perpage",
+							"value": "990"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get breed images - not found",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2775a874-a406-44c0-be4d-85493f695ad2",
+						"exec": [
+							"schema = {",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"Validating not found error in getting breed image\",",
+							"  \"required\": [",
+							"    \"success\",",
+							"    \"message\",",
+							"    \"page\",",
+							"    \"perpage\",",
+							"    \"total\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"$id\": \"#/properties/success\",",
+							"      \"type\": \"boolean\",",
+							"      \"title\": \"The Success Schema\",",
+							"      \"default\": false,",
+							"      \"examples\": [",
+							"        false",
+							"      ]",
+							"    },",
+							"    \"message\": {",
+							"      \"$id\": \"#/properties/message\",",
+							"      \"type\": \"string\",",
+							"      \"title\": \"The Message Schema\",",
+							"      \"default\": \"\",",
+							"      \"examples\": [",
+							"        \" perpage is over 200 limitation or less than 0\"",
+							"      ],",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"page\": {",
+							"      \"$id\": \"#/properties/page\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Page Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"perpage\": {",
+							"      \"$id\": \"#/properties/perpage\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Perpage Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"total\": {",
+							"      \"$id\": \"#/properties/total\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Total Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    }",
+							"  }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f7b352c9-a04f-4490-b0c0-6f969b7b814d",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Validating not found error in getting breed image\", function() {",
+							"    var response = pm.response.json();",
+							"    var result =tv4.validateResult(response, schema)",
+							"    pm.expect(result.valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validating success to be false\", function() {",
+							"    var response = pm.response.json();",
+							"    pm.expect(response.success).to.be.false;",
+							"});",
+							"",
+							"pm.test(\"Validating message should have error message\", function() {",
+							"    var response = pm.response.json();",
+							"    var tag = response.message.length > 0 ? true : false;",
+							"    pm.expect(tag).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:43000/dog-api/hounde?page=10&perpage=99",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "43000",
+					"path": [
+						"dog-api",
+						"hounde"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "10"
+						},
+						{
+							"key": "perpage",
+							"value": "99"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get breed images - page error",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "137a384f-a3bb-4dd1-b628-bdcba674044f",
+						"exec": [
+							"schema = {",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"Validating page error in getting breed image\",",
+							"  \"required\": [",
+							"    \"success\",",
+							"    \"message\",",
+							"    \"page\",",
+							"    \"perpage\",",
+							"    \"total\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"$id\": \"#/properties/success\",",
+							"      \"type\": \"boolean\",",
+							"      \"title\": \"The Success Schema\",",
+							"      \"default\": false,",
+							"      \"examples\": [",
+							"        false",
+							"      ]",
+							"    },",
+							"    \"message\": {",
+							"      \"$id\": \"#/properties/message\",",
+							"      \"type\": \"string\",",
+							"      \"title\": \"The Message Schema\",",
+							"      \"default\": \"\",",
+							"      \"examples\": [",
+							"        \" perpage is over 200 limitation or less than 0\"",
+							"      ],",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"page\": {",
+							"      \"$id\": \"#/properties/page\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Page Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"perpage\": {",
+							"      \"$id\": \"#/properties/perpage\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Perpage Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"total\": {",
+							"      \"$id\": \"#/properties/total\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Total Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    }",
+							"  }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c536ffc9-d7db-4eb2-8ad9-8e87cfc81bde",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validating page error in getting breed image\", function() {",
+							"    var response = pm.response.json();",
+							"    var result =tv4.validateResult(response, schema)",
+							"    pm.expect(result.valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validating success to be false\", function() {",
+							"    var response = pm.response.json();",
+							"    pm.expect(response.success).to.be.false;",
+							"});",
+							"",
+							"pm.test(\"Validating message should have error message\", function() {",
+							"    var response = pm.response.json();",
+							"    var tag = response.message.length > 0 ? true : false;",
+							"    pm.expect(tag).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:43000/dog-api/hound?page=-1&perpage=99",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "43000",
+					"path": [
+						"dog-api",
+						"hound"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "-1"
+						},
+						{
+							"key": "perpage",
+							"value": "99"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get breed images - over limit",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "437335ec-fac7-44a9-91ff-aa5291b3bb13",
+						"exec": [
+							"schema = {",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"Validating over limit in getting breed image\",",
+							"  \"required\": [",
+							"    \"success\",",
+							"    \"message\",",
+							"    \"page\",",
+							"    \"perpage\",",
+							"    \"total\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"$id\": \"#/properties/success\",",
+							"      \"type\": \"boolean\",",
+							"      \"title\": \"The Success Schema\",",
+							"      \"default\": false,",
+							"      \"examples\": [",
+							"        false",
+							"      ]",
+							"    },",
+							"    \"message\": {",
+							"      \"$id\": \"#/properties/message\",",
+							"      \"type\": \"string\",",
+							"      \"title\": \"The Message Schema\",",
+							"      \"default\": \"\",",
+							"      \"examples\": [",
+							"        \" perpage is over 200 limitation or less than 0\"",
+							"      ],",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"page\": {",
+							"      \"$id\": \"#/properties/page\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Page Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"perpage\": {",
+							"      \"$id\": \"#/properties/perpage\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Perpage Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"total\": {",
+							"      \"$id\": \"#/properties/total\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Total Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    }",
+							"  }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "af46b6c8-96f4-40b4-bcb2-877e6a466460",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validating over limit in getting breed image\", function() {",
+							"    var response = pm.response.json();",
+							"    var result =tv4.validateResult(response, schema)",
+							"    pm.expect(result.valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validating success to be false\", function() {",
+							"    var response = pm.response.json();",
+							"    pm.expect(response.success).to.be.false;",
+							"});",
+							"",
+							"pm.test(\"Validating message should have error message\", function() {",
+							"    var response = pm.response.json();",
+							"    var tag = response.message.length > 0 ? true : false;",
+							"    pm.expect(tag).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:43000/dog-api/hound?page=300&perpage=99",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "43000",
+					"path": [
+						"dog-api",
+						"hound"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "300"
+						},
+						{
+							"key": "perpage",
+							"value": "99"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get subbreed images",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "dae8b9a6-f227-475c-84e4-198f82045139",
+						"exec": [
+							"schema = {",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"Validating is List of subbreeds image response schema correct\",",
+							"  \"required\": [",
+							"    \"success\",",
+							"    \"message\",",
+							"    \"page\",",
+							"    \"perpage\",",
+							"    \"total\",",
+							"    \"data\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"$id\": \"#/properties/success\",",
+							"      \"type\": \"boolean\",",
+							"      \"title\": \"The Success Schema\",",
+							"      \"default\": false,",
+							"      \"examples\": [",
+							"        true",
+							"      ]",
+							"    },",
+							"    \"message\": {",
+							"      \"$id\": \"#/properties/message\",",
+							"      \"type\": \"string\",",
+							"      \"title\": \"The Message Schema\",",
+							"      \"default\": \"\",",
+							"      \"examples\": [",
+							"        \"\"",
+							"      ],",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"page\": {",
+							"      \"$id\": \"#/properties/page\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Page Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        10",
+							"      ]",
+							"    },",
+							"    \"perpage\": {",
+							"      \"$id\": \"#/properties/perpage\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Perpage Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        99",
+							"      ]",
+							"    },",
+							"    \"total\": {",
+							"      \"$id\": \"#/properties/total\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Total Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        1000",
+							"      ]",
+							"    },",
+							"    \"data\": {",
+							"      \"$id\": \"#/properties/data\",",
+							"      \"type\": \"array\",",
+							"      \"title\": \"The Data Schema\",",
+							"      \"items\": {",
+							"        \"$id\": \"#/properties/data/items\",",
+							"        \"type\": \"string\",",
+							"        \"title\": \"The Items Schema\",",
+							"        \"default\": \"\",",
+							"        \"examples\": [",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1824.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_183.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1863.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1882.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1912.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1918.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1921.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1931.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1965.jpg\",",
+							"          \"https://images.dog.ceo/breeds/hound-walker/n02089867_1987.jpg\"",
+							"        ],",
+							"        \"pattern\": \"^(.*)$\"",
+							"      }",
+							"    }",
+							"  }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7999478d-3755-44a8-a1a0-450fb923f243",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validating is List of subbreeds images response schema correct\", function() {",
+							"    var response = pm.response.json();",
+							"    var result=tv4.validateResult(response, schema)",
+							"pm.expect(result.valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validating success to be true\", function() {",
+							"    var response = pm.response.json();",
+							"    pm.expect(response.success).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:43000/dog-api/hound/afghan?page=1&perpage=200",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "43000",
+					"path": [
+						"dog-api",
+						"hound",
+						"afghan"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "perpage",
+							"value": "200"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get subbreed images - not found",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d7b9f5ce-ddb4-4845-82b1-c057f4c8b12f",
+						"exec": [
+							"schema = {",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"Validating not found error in getting sub breed image\",",
+							"  \"required\": [",
+							"    \"success\",",
+							"    \"message\",",
+							"    \"page\",",
+							"    \"perpage\",",
+							"    \"total\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"$id\": \"#/properties/success\",",
+							"      \"type\": \"boolean\",",
+							"      \"title\": \"The Success Schema\",",
+							"      \"default\": false,",
+							"      \"examples\": [",
+							"        false",
+							"      ]",
+							"    },",
+							"    \"message\": {",
+							"      \"$id\": \"#/properties/message\",",
+							"      \"type\": \"string\",",
+							"      \"title\": \"The Message Schema\",",
+							"      \"default\": \"\",",
+							"      \"examples\": [",
+							"        \" perpage is over 200 limitation or less than 0\"",
+							"      ],",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"page\": {",
+							"      \"$id\": \"#/properties/page\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Page Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"perpage\": {",
+							"      \"$id\": \"#/properties/perpage\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Perpage Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"total\": {",
+							"      \"$id\": \"#/properties/total\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Total Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    }",
+							"  }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d33d8030-bde5-4672-9e61-7bf5ac523dc3",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Validating not found error in getting sub breed image\", function() {",
+							"    var response = pm.response.json();",
+							"    var result =tv4.validateResult(response, schema)",
+							"    pm.expect(result.valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validating success to be false\", function() {",
+							"    var response = pm.response.json();",
+							"    pm.expect(response.success).to.be.false;",
+							"});",
+							"",
+							"pm.test(\"Validating message should have error message\", function() {",
+							"    var response = pm.response.json();",
+							"    var tag = response.message.length > 0 ? true : false;",
+							"    pm.expect(tag).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:43000/dog-api/hound/afcghan?page=1&perpage=200",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "43000",
+					"path": [
+						"dog-api",
+						"hound",
+						"afcghan"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "perpage",
+							"value": "200"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get subbreed images - perpage error",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "738da40e-7d36-4f21-9e60-84431e361c32",
+						"exec": [
+							"schema = {",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"Validating perpage error in getting sub breed image\",",
+							"  \"required\": [",
+							"    \"success\",",
+							"    \"message\",",
+							"    \"page\",",
+							"    \"perpage\",",
+							"    \"total\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"$id\": \"#/properties/success\",",
+							"      \"type\": \"boolean\",",
+							"      \"title\": \"The Success Schema\",",
+							"      \"default\": false,",
+							"      \"examples\": [",
+							"        false",
+							"      ]",
+							"    },",
+							"    \"message\": {",
+							"      \"$id\": \"#/properties/message\",",
+							"      \"type\": \"string\",",
+							"      \"title\": \"The Message Schema\",",
+							"      \"default\": \"\",",
+							"      \"examples\": [",
+							"        \" perpage is over 200 limitation or less than 0\"",
+							"      ],",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"page\": {",
+							"      \"$id\": \"#/properties/page\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Page Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"perpage\": {",
+							"      \"$id\": \"#/properties/perpage\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Perpage Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"total\": {",
+							"      \"$id\": \"#/properties/total\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Total Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    }",
+							"  }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "afee2ebe-375c-49b2-ab7a-6e522da13824",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validating perpage error in getting breed image\", function() {",
+							"    var response = pm.response.json();",
+							"    var result =tv4.validateResult(response, schema)",
+							"    pm.expect(result.valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validating success to be false\", function() {",
+							"    var response = pm.response.json();",
+							"    pm.expect(response.success).to.be.false;",
+							"});",
+							"",
+							"pm.test(\"Validating message should have error message\", function() {",
+							"    var response = pm.response.json();",
+							"    var tag = response.message.length > 0 ? true : false;",
+							"    pm.expect(tag).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:43000/dog-api/hound/afghan?page=10&perpage=990",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "43000",
+					"path": [
+						"dog-api",
+						"hound",
+						"afghan"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "10"
+						},
+						{
+							"key": "perpage",
+							"value": "990"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get subbreed images - page error",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "137a384f-a3bb-4dd1-b628-bdcba674044f",
+						"exec": [
+							"schema = {",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"Validating page error in getting sub breed image\",",
+							"  \"required\": [",
+							"    \"success\",",
+							"    \"message\",",
+							"    \"page\",",
+							"    \"perpage\",",
+							"    \"total\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"$id\": \"#/properties/success\",",
+							"      \"type\": \"boolean\",",
+							"      \"title\": \"The Success Schema\",",
+							"      \"default\": false,",
+							"      \"examples\": [",
+							"        false",
+							"      ]",
+							"    },",
+							"    \"message\": {",
+							"      \"$id\": \"#/properties/message\",",
+							"      \"type\": \"string\",",
+							"      \"title\": \"The Message Schema\",",
+							"      \"default\": \"\",",
+							"      \"examples\": [",
+							"        \" perpage is over 200 limitation or less than 0\"",
+							"      ],",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"page\": {",
+							"      \"$id\": \"#/properties/page\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Page Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"perpage\": {",
+							"      \"$id\": \"#/properties/perpage\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Perpage Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"total\": {",
+							"      \"$id\": \"#/properties/total\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Total Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    }",
+							"  }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c536ffc9-d7db-4eb2-8ad9-8e87cfc81bde",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validating page error in getting sub breed image\", function() {",
+							"    var response = pm.response.json();",
+							"    var result =tv4.validateResult(response, schema)",
+							"    pm.expect(result.valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validating success to be false\", function() {",
+							"    var response = pm.response.json();",
+							"    pm.expect(response.success).to.be.false;",
+							"});",
+							"",
+							"pm.test(\"Validating message should have error message\", function() {",
+							"    var response = pm.response.json();",
+							"    var tag = response.message.length > 0 ? true : false;",
+							"    pm.expect(tag).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:43000/dog-api/hound/afghan?page=-1&perpage=99",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "43000",
+					"path": [
+						"dog-api",
+						"hound",
+						"afghan"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "-1"
+						},
+						{
+							"key": "perpage",
+							"value": "99"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get subbreed images - over limit",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "437335ec-fac7-44a9-91ff-aa5291b3bb13",
+						"exec": [
+							"schema = {",
+							"  \"definitions\": {},",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+							"  \"$id\": \"http://example.com/root.json\",",
+							"  \"type\": \"object\",",
+							"  \"title\": \"Validating over limit in getting subbreed image\",",
+							"  \"required\": [",
+							"    \"success\",",
+							"    \"message\",",
+							"    \"page\",",
+							"    \"perpage\",",
+							"    \"total\"",
+							"  ],",
+							"  \"properties\": {",
+							"    \"success\": {",
+							"      \"$id\": \"#/properties/success\",",
+							"      \"type\": \"boolean\",",
+							"      \"title\": \"The Success Schema\",",
+							"      \"default\": false,",
+							"      \"examples\": [",
+							"        false",
+							"      ]",
+							"    },",
+							"    \"message\": {",
+							"      \"$id\": \"#/properties/message\",",
+							"      \"type\": \"string\",",
+							"      \"title\": \"The Message Schema\",",
+							"      \"default\": \"\",",
+							"      \"examples\": [",
+							"        \" perpage is over 200 limitation or less than 0\"",
+							"      ],",
+							"      \"pattern\": \"^(.*)$\"",
+							"    },",
+							"    \"page\": {",
+							"      \"$id\": \"#/properties/page\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Page Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"perpage\": {",
+							"      \"$id\": \"#/properties/perpage\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Perpage Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    },",
+							"    \"total\": {",
+							"      \"$id\": \"#/properties/total\",",
+							"      \"type\": \"integer\",",
+							"      \"title\": \"The Total Schema\",",
+							"      \"default\": 0,",
+							"      \"examples\": [",
+							"        0",
+							"      ]",
+							"    }",
+							"  }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "af46b6c8-96f4-40b4-bcb2-877e6a466460",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validating over limit in getting subbreed image\", function() {",
+							"    var response = pm.response.json();",
+							"    var result =tv4.validateResult(response, schema)",
+							"    pm.expect(result.valid).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validating success to be false\", function() {",
+							"    var response = pm.response.json();",
+							"    pm.expect(response.success).to.be.false;",
+							"});",
+							"",
+							"pm.test(\"Validating message should have error message\", function() {",
+							"    var response = pm.response.json();",
+							"    var tag = response.message.length > 0 ? true : false;",
+							"    pm.expect(tag).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:43000/dog-api/hound?page=300&perpage=99",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "43000",
+					"path": [
+						"dog-api",
+						"hound"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "300"
+						},
+						{
+							"key": "perpage",
+							"value": "99"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,11 +1,13 @@
-###(important)###
+# important
 
-##I think it is easy to start with scaffold instead of from a scratch, so I did some search and got this from Github(https://github.com/javieraviles/node-typescript-koa-rest) , which is not initially created by me!!!!!##
+#I think it is easy to start with scaffold instead of from a scratch, so I did some search and got this from Github(https://github.com/javieraviles/node-typescript-koa-rest) , which is not initially created by me!!!!!##
 
 #reference site :  
+```
 https://jsonschema.net/#/
 https://medium.com/velotio-perspectives/api-testing-using-postman-and-newman-6c68c33303fc
 https://buddy.works/guides/how-dockerize-node-application
+```
 
 # Getting Started
 - Clone the repository
@@ -34,17 +36,17 @@ docker build -t nodejs-demo .
 docker run -p 8080:43000 nodejs-demo
 
 ```
-# access sample : http://localhost:8080/dog-api
-
+- access sample : http://localhost:8080/dog-api
 
 - or download Docker image from docker hub and Run
 ```
 docker run jameschan0803/apps:latest
 
 ```
-###### ###### ###### ###### ###### ###### ###### ###### ###### ######
-###### the below information is from original repository ##############
-###### ###### ###### ###### ###### ###### ###### ###### ######
+
+```
+# the below information is from original repository ##############
+```
 
 # Node - Koa - Typescript Project
 
