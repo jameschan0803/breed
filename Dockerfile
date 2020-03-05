@@ -17,4 +17,4 @@ COPY . .
 
 EXPOSE 43000
 
-CMD [ "npm", "run", "watch-server" ]
+CMD [ "npm", "run", "start" ]

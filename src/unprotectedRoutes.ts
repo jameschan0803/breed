@@ -6,9 +6,10 @@ const unprotectedRouter  = new SwaggerRouter();
 
 // USER ROUTES
 unprotectedRouter.get('/dog-api', controller.breed.getAll);
+unprotectedRouter.get('/dog-api/view/:breed', controller.breed.getViewBreed);
+unprotectedRouter.get('/dog-api/view/:breed/:subbreed', controller.breed.getViewSubBreed);
 unprotectedRouter.get('/dog-api/:breed', controller.breed.getBreed);
 unprotectedRouter.get('/dog-api/:breed/:subbreed', controller.breed.getSubBreed);
-
 
 // Swagger endpoint
 unprotectedRouter.swagger({

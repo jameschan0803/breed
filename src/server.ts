@@ -15,7 +15,7 @@ import { protectedRouter } from './protectedRoutes';
 import { cron } from './cron';
 
 // Get DB connection options from env variable
-const connectionOptions = PostgressConnectionStringParser.parse(config.databaseUrl);
+//const connectionOptions = PostgressConnectionStringParser.parse(config.databaseUrl);
 
 // create connection with database
 // note that its not active database connection
